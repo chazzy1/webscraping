@@ -21,11 +21,3 @@ class IndustryListSpider(Spider):
             #["SubNavigationLink"]
             yield item
 
-    def parse_result(self, response):
-        
-        for xxx:
-            yield Request(url=url, callback=self.parse_detail)
-
-
-    def parse_detail(self, response):
-        pass

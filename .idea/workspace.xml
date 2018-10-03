@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9abcc41c-3a37-4493-b102-8e2bcfcf6745" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/approach1.py" beforeDir="false" afterPath="$PROJECT_DIR$/approach1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/article.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/hi.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/python-event.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/article.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/events.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/hi.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/html.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/location.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/movies.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/rating-column.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/time.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/title-column.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/title.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pr_scraper/spiders/industry_list_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/pr_scraper/spiders/industry_list_spider.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -82,11 +69,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pr_scraper/spiders/industry_list_spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="8" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
+            <state relative-caret-position="391">
+              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
               <folding>
                 <element signature="e#24#49#0" expanded="true" />
-                <marker date="1538600199196" expanded="true" signature="967:1054" ph="..." />
               </folding>
             </state>
           </provider>
@@ -275,11 +261,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pr_scraper/spiders/industry_list_spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="8" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
+        <state relative-caret-position="391">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
           <folding>
             <element signature="e#24#49#0" expanded="true" />
-            <marker date="1538600199196" expanded="true" signature="967:1054" ph="..." />
           </folding>
         </state>
       </provider>
