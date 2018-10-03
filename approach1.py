@@ -21,9 +21,15 @@ def get_industry_list():
     html_text = requests.get(url_industry_list).text
     html_bs4 = BeautifulSoup(html_text, 'html.parser')
 
-    sub_navigation_link = html_bs4.find_all('a',{"class":"omniture-subnav"})
+    sub_navigation_links = html_bs4.find_all('a',{"class":"omniture-subnav"})
 
-    print(sub_navigation_link)
+    #print(sub_navigation_links)
+
+    for link in sub_navigation_links:
+
+        if len(link.attrs['class']) == 1 and link.attrs['class'][0] == 'omniture-subnav':
+            print(link.attrs['data-omniture'])
+
 
 
 get_industry_list()
