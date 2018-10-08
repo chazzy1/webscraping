@@ -3,8 +3,8 @@ from scrapy import Spider
 from pr_scraper.items import IndustryItem
 import json
 
-class IndustryListSpider(Spider):
-    name = 'industry_list_spider'
+class PRNewsSpider(Spider):
+    name = 'pr_news_spider'
     allowed_urls = ['http://http://www.prnewswire.co.uk']
     start_urls = ['http://www.prnewswire.co.uk/news-releases/news-releases-list/']
 
