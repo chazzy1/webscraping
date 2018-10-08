@@ -6,4 +6,4 @@ NEWSPIDER_MODULE = 'pr_scraper.spiders'
 
 DOWNLOAD_DELAY = 3
 
-ITEM_PIPELINES = {'pr_scraper.pipelines.WriteItemPipeline': 100, }
+#ITEM_PIPELINES = {'pr_scraper.pipelines.WriteItemPipeline': 100, }
