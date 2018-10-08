@@ -43,7 +43,15 @@ class NewsSpider(Spider):
 
         for industry in industries:
             absolute_page_url = response.urljoin(industry['link'])
+
+            # test only
+            #if "Women" not in str(industry['nav_levels']):
+            #    continue
+
             yield scrapy.Request(absolute_page_url, callback=self.parse_news_list, meta={'industry': industry})
+
+            # test only
+            #break
 
     def parse_news_list(self, response):
         """
@@ -55,20 +63,21 @@ class NewsSpider(Spider):
         meta = response.meta
         meta['page_number'] = meta.get('page_number', 1)
 
-        rows = response.xpath('//*[@id="main"]/section[3]/div/div[1]//div[@class="col-sm-12 card"]')
+        rows = response.xpath('//*[@id="main"]/section[3]/div/div[1]/div[@class="row"]')
         if len(rows) > 0:
             for row in rows:
                 item = NewsItem()
 
-                item['link'] = row.xpath('./h3/a/@href').extract_first()
-                item['title'] = row.xpath('./h3/a/@title').extract_first()
-                item['release_date'] = row.xpath('./h3/small/text()').extract_first().strip()
+                item['link'] = row.xpath('.//a[@class="news-release"]/@href').extract_first()
+                item['title'] = row.xpath('.//a[@class="news-release"]/@title').extract_first()
+                item['release_date'] = row.xpath('.//small/text()').extract_first().strip()
                 item['levels'] = meta['industry']['nav_levels']
                 yield item
                 #yield scrapy.Request(item['link'], callback=self.parse_news_content, meta={'item': item})
             meta['page_number'] += 1
             absolute_page_url = self.join_page_number(response, meta['industry']["link"], meta['page_number'])
 
+            yield scrapy.Request(absolute_page_url, callback=self.parse_news_list, meta=meta)
 
     def parse_news_content(selfself, response):
         """
