@@ -16,7 +16,7 @@ class PRNewsSpider(Spider):
         for row in rows:
             item = IndustryItem()
 
-            item['link'] = row.xpath('./@href').extract_first()
+            item['link'] = row.xpath('./@href').extract_efirst()
             item['nav_levels'] = json.loads(row.xpath('./@data-omniture').extract_first())
             #["SubNavigationLink"]
             yield item
