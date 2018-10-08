@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import csv
+import os
 
 class WriteItemPipeline(object):
     def __init__(self):
@@ -21,6 +22,8 @@ class WriteItemPipeline(object):
 
 class WriteNewsItemPipeline(object):
     def __init__(self):
+        self.current_dir = os.getcwd()
+        self.data_dir = os.path.join(self.current_dir, 'data')
         self.filename_title = 'titles.txt'
         self.file_title = None
         self.csvwriter_title = None
@@ -30,10 +33,10 @@ class WriteNewsItemPipeline(object):
         self.csvwriter_content = None
 
     def open_spider(self, spider):
-        self.file_title = open(self.filename_title, 'w', encoding='utf-8')
+        self.file_title = open(os.path.join(self.data_dir, self.filename_title), 'w', encoding='utf-8')
         self.csvwriter_title = csv.writer(self.file_title)
 
-        self.file_content = open(self.filename_content, 'w', encoding='utf-8')
+        self.file_content = open(os.path.join(self.data_dir, self.filename_content), 'w', encoding='utf-8')
         self.csvwriter_content = csv.writer(self.file_content)
 
     def close_spider(self, spider):
