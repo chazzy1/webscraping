@@ -1,6 +1,6 @@
 import pandas as pd
 import json
-df = pd.read_csv('./data/titles_20181008.txt', header=None, nrows=None)
+df = pd.read_csv('./data/titles_20181008.txt', header=None, nrows=500)
 
 df.columns = ['nav_level', 'link', 'release_date', 'title']
 
@@ -26,41 +26,34 @@ df = df[~df["level3"].isin(['UK Regulatory News', 'All Public Company News'])]
 #group = df.groupby('level3')
 #print(group.size().sort_values(ascending=False))
 
-df["timestamp"] = pd.to_datetime(df["release_date"])
+df["release_date"] = pd.to_datetime(df["release_date"])
 
-df['release_date'] = df['timestamp'].apply(lambda x: "%d-%d-%d" % (x.year,x.month,x.day))
+#df['release_date'] = df['timestamp'].apply(lambda x: "%d-%d-%d" % (x.year,x.month,x.day))
 
 #df['release_date'] = df['timestamp'].apply(lambda x: "%d-%d" % (x.year, x.week))
 
 
 
 time_df = df.groupby(['release_date', 'level3']).size().unstack().fillna(0)
-time_df = time_df.reset_index()
+#time_df = time_df.reset_index()
 
-time_df['release_date'] = pd.to_datetime(time_df["release_date"])
+#time_df['release_date'] = pd.to_datetime(time_df["release_date"], format='%Y-%W')
 
-
+#df['count'].resample('D', how='sum')
 
 time_df = time_df.sort_values('release_date')
-time_df = time_df.set_index('release_date')
+#time_df = time_df.set_index('release_date')
 
 
+time_df = time_df.resample('M', how='sum')
+
+print(time_df.columns)
 
 from matplotlib import pyplot as plt
 
 plt.plot(time_df)
-
+plt.legend(loc='upper left')
 plt.show()
-"""
-sample_data = pd.DataFrame(df, columns=['release_date', 'level3']).head(100)
-sample_data = sample_data[sample_data['level3'] == 'Travel']
-"""
 
 
-
-
-#time_df.plot(x='release_date')
-
-
-#print(group.agg(['count']))
 
