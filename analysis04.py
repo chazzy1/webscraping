@@ -3,6 +3,9 @@ import json
 
 from matplotlib import pyplot as plt
 
+"""
+removed weekends
+"""
 
 df = pd.read_csv('./data/titles_20181008.txt', header=None, nrows=None)
 
@@ -25,21 +28,15 @@ df["release_date"] = pd.to_datetime(df["release_date"])
 df = df.sort_values('release_date')
 
 
-#df["day_of_week"] = df['release_date'].dt.weekday_name
-
-#df = df[~df["day_of_week"].isin(['Saturday', 'Sunday'])]
-
-#print(df['release_date'])
-#group = df[df['level3'] == 'Blockchain'].groupby('day_of_week')
-#print(group.size())
-
-
 time_df = df.groupby(['release_date', 'level3']).size().unstack().fillna(0)
 
-time_df = time_df.resample('M').sum()
+time_df = time_df.resample('W').sum()
 
 #time_df = time_df[time_df.index.dayofweek < 5]
 #time_df = time_df[~time_df.index.weekday_name.isin(['Saturday', 'Sunday'])]
+
+
+
 
 
 

@@ -1,5 +1,14 @@
 import pandas as pd
 import json
+
+
+"""
+Trying to see the trend
+
+"""
+
+
+
 df = pd.read_csv('./data/titles_20181008.txt', header=None, nrows=None)
 
 df.columns = ['nav_level', 'link', 'release_date', 'title']
@@ -25,6 +34,8 @@ time_df = df.groupby(['release_date', 'level3']).size().unstack().fillna(0)
 time_df = time_df.sort_values('release_date')
 
 
+print(time_df)
+
 time_df = time_df.resample('D').sum()
 
 
@@ -33,6 +44,8 @@ from matplotlib import pyplot as plt
 plt.plot(time_df['Blockchain'])
 #plt.legend(loc='upper left')
 plt.show()
+
+
 
 
 

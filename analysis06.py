@@ -1,15 +1,15 @@
 import pandas as pd
 import json
 
-"""
-reason for sparks
-"""
+from matplotlib import pyplot as plt
 
+"""
+removed weekends
+"""
 
 df = pd.read_csv('./data/titles_20181008.txt', header=None, nrows=None)
 
 df.columns = ['nav_level', 'link', 'release_date', 'title']
-
 
 def get_nav_level(nav_level_str, level):
     nav_level3 = json.loads(nav_level_str.replace("'", "\""))["SubNavigationLink"].split("|")[3].strip()
@@ -25,23 +25,20 @@ df = df[~df["level3"].isin(['UK Regulatory News', 'All Public Company News'])]
 
 df["release_date"] = pd.to_datetime(df["release_date"])
 
-df['day_of_week'] = df['release_date'].dt.weekday_name
+df["week"] = df["release_date"].dt.week
 
-group = df.groupby('day_of_week')
+df = df[~df["week"].isin([15, 41])]
 
-
-print(group.size())
-
-
-"""
-day_of_week
-Friday        9370
-Monday       14824
-Saturday       590
-Sunday         711
-Thursday     17890
-Tuesday      18448
-Wednesday    17126
-"""
+df = df.sort_values('release_date')
 
 
+time_df = df.groupby(['release_date', 'level3']).size().unstack().fillna(0)
+
+time_df = time_df.resample('W').sum()
+
+time_df = time_df[time_df.index.dayofweek < 5]
+
+
+plt.plot(time_df['Blockchain'])
+#plt.legend(loc='upper left')
+plt.show()
