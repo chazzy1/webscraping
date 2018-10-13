@@ -13,3 +13,6 @@ to start scraping.
 result will be generated in data folder.
 
 
+analysis on scraped data is documented in documents/news_scraping.pptx
+
+check analysis##.py to follow analysis process
