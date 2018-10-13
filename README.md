@@ -6,8 +6,10 @@ requires python 3.6 and packages listed in requirements.txt
 
 run
 
-	scrapy crawl news_spider to 
+	scrapy crawl news_spider
 
 to start scraping.
 
 result will be generated in data folder.
+
+

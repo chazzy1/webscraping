@@ -1,17 +1,12 @@
 import pandas as pd
-import json
-
 from matplotlib import pyplot as plt
+from utils import get_pr_news_data
 
 """
-trying to remov first, last week
+have to remove first, last week to do Weekly resampling. 
+for these weeks, scraped data is not complete (not full week)
 """
-
-df = pd.read_csv('./data/titles_20181008.txt', header=None, nrows=None)
-
-df.columns = ['nav_level', 'link', 'release_date', 'title']
-
-df["release_date"] = pd.to_datetime(df["release_date"])
+df = get_pr_news_data()
 
 df["week"] = df["release_date"].dt.week
 
