@@ -24,22 +24,27 @@ df["level1"] = df["nav_level"].map(lambda x: get_nav_level(x, 1))
 df["level2"] = df["nav_level"].map(lambda x: get_nav_level(x, 2))
 df["level3"] = df["nav_level"].map(lambda x: get_nav_level(x, 3))
 
-df = df[~df["level3"].isin(['UK Regulatory News', 'All Public Company News'])]
+df = df[~df["level3"].isin(['UK Regulatory News', 'All Public Company News', 'Computer & Electronics'])]
 df["release_date"] = pd.to_datetime(df["release_date"])
 df["week"] = df["release_date"].dt.week
 df = df[~df["week"].isin([15, 41])]
 df = df.sort_values('release_date')
 
 
+group = df.groupby('level3')
+df_pr_count = df.groupby('level3').size().sort_values(ascending=True)
+
+df_pr_count = df_pr_count.reset_index()
+df_pr_count.columns = ['industry', 'pr_count']
 
 
-pr_count_df = df.groupby(['release_date', 'level3']).size().unstack().fillna(0)
-pr_count_df = pr_count_df.resample('D').sum()
+df_time = df.groupby(['release_date', 'level3']).size().unstack().fillna(0)
+df_time = df_time.resample('D').sum()
 
-pr_count_df = pr_count_df[pr_count_df.index.dayofweek < 5].stack()
-pr_count_df = pd.DataFrame(pr_count_df).reset_index()
+df_time = df_time[df_time.index.dayofweek < 5].stack()
+df_time = pd.DataFrame(df_time).reset_index()
 
-pr_count_df.columns = ['release_date', 'level3', 'pr_count']
+df_time.columns = ['release_date', 'level3', 'pr_count']
 
 
 def trendline(data, order=1):
@@ -48,32 +53,31 @@ def trendline(data, order=1):
     return float(slope)
 
 
-slope_df = pd.DataFrame(pr_count_df.groupby('level3').apply(lambda v: trendline(v.pr_count)))
-slope_df.columns = ['slope']
-slope_df = slope_df.sort_values('slope', ascending=False).reset_index()
-#print(slope_df)
+df_slope = pd.DataFrame(df_time.groupby('level3').apply(lambda v: trendline(v.pr_count)))
+df_slope.columns = ['slope']
+df_slope = df_slope.sort_values('slope', ascending=False).reset_index()
+df_slope.columns = ['industry', 'slope']
+
+df_3d = pd.merge(left=df_pr_count, right=df_slope, on='industry')
+
+df_3d['color'] = df_3d.apply(lambda x: 'R' if x['slope'] > 0 else 'B', axis=1)
 
 
-
-df_3d = pd.merge(left=pr_count_df, right=slope_df, on='level3')
+print(df_3d[ (df_3d['slope'] > 0) & (df_3d['pr_count'] > 1000) ])
+print(df_3d[ (df_3d['slope'] < -0.022) & (df_3d['pr_count'] > 1000) ])
 
 
 pr_count = df_3d['pr_count'].tolist()
 slope = df_3d['slope'].tolist()
 level3 = df_3d.index
-
+color = df_3d['color'].tolist()
 
 
 fig = plt.figure()
 ax = Axes3D(fig)
-import random
-sequence_containing_x_vals = list(range(0, 100))
-sequence_containing_y_vals = list(range(0, 100))
-sequence_containing_z_vals = list(range(0, 100))
 
-random.shuffle(sequence_containing_x_vals)
-random.shuffle(sequence_containing_y_vals)
-random.shuffle(sequence_containing_z_vals)
 
-ax.scatter(level3, pr_count, slope)
+ax.scatter(xs=level3, ys=pr_count, zs=slope, color=color, marker='o')
 plt.show()
+
+
